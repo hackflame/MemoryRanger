@@ -30,6 +30,7 @@
     <Platform Condition="'$(Platform)' == ''">Win32</Platform>
     <RootNamespace>mem_attacker_driver</RootNamespace>
     <ProjectName>mem_attacker_driver</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -111,6 +112,9 @@
       <ControlFlowGuard>false</ControlFlowGuard>
     </ClCompile>
     <Link />
+    <Link>
+      <EntryPointSymbol>DriverEntry</EntryPointSymbol>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -125,7 +129,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\utils\zwfile.cpp" />
+    <ClCompile Include="files_hijacking.cpp" />
     <ClCompile Include="mem_attacker_driver.cpp" />
+    <ClCompile Include="token_hijacking.cpp" />
     <ClCompile Include="vulnerable_code.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,7 +139,9 @@
     <ClInclude Include="..\..\utils\zwfile.h" />
     <ClInclude Include="asm.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="files_hijacking.h" />
     <ClInclude Include="mem_attacker_driver.h" />
+    <ClInclude Include="token_hijacking.h" />
     <ClInclude Include="vulnerable_code.h" />
   </ItemGroup>
   <ItemGroup>

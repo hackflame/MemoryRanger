@@ -37,6 +37,7 @@ _IRQL_requires_max_(PASSIVE_LEVEL) void TestTermination();
 
 _IRQL_requires_max_(PASSIVE_LEVEL) void TestRwe();
 
+void TestpAddOSInternalDrivers();
 ////////////////////////////////////////////////////////////////////////////////
 //
 // variables

@@ -1,0 +1,54 @@
+// Copyright (c) 2015-2017, Satoshi Tanda. All rights reserved.
+// Use of this source code is governed by a MIT-style license that can be
+// found in the LICENSE file.
+
+/// @file
+/// @brief Declares interfaces to hot-plug functions.
+
+#ifndef HYPERPLATFORM_HOTPLUG_CALLBACK_H_
+#define HYPERPLATFORM_HOTPLUG_CALLBACK_H_
+
+#include <fltKernel.h> //#include <ntddk.h>
+
+#include "common.h"
+#include "log.h"
+#include "vm.h"
+
+extern "C" {
+////////////////////////////////////////////////////////////////////////////////
+//
+// macro utilities
+//
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// constants and macros
+//
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// types
+//
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// prototypes
+//
+
+_IRQL_requires_max_(PASSIVE_LEVEL) NTSTATUS HotplugCallbackInitialization();
+
+_IRQL_requires_max_(PASSIVE_LEVEL) void HotplugCallbackTermination();
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// variables
+//
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// implementations
+//
+
+}  // extern "C"
+
+#endif  // HYPERPLATFORM_HOTPLUG_CALLBACK_H_

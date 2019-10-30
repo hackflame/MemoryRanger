@@ -29,6 +29,7 @@
     <Configuration>Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">Win32</Platform>
     <RootNamespace>MemoryMon</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -121,7 +122,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(OutDir)capstone_static_winkernel.lib;ntstrsafe.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,21 +131,15 @@
       <WppKernelMode>true</WppKernelMode>
       <AdditionalIncludeDirectories>$(SolutionDir)capstone\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MEMORYMON_ENABLE_MMIO_TRACE_NOT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Optimization>Disabled</Optimization>
-      <DisableSpecificWarnings>4748;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalOptions>/D "DEPRECATE_DDK_FUNCTIONS=1" /D "MSC_NOOPT" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(OutDir)capstone_static_winkernel.lib;ntstrsafe.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\DdiMon\ddi_mon.cpp" />
-    <ClCompile Include="..\DdiMon\shadow_hook.cpp" />
     <ClCompile Include="..\HyperPlatform\HyperPlatform\driver.cpp" />
     <ClCompile Include="..\HyperPlatform\HyperPlatform\ept.cpp" />
     <ClCompile Include="..\HyperPlatform\HyperPlatform\global_object.cpp" />
@@ -157,10 +151,9 @@
     <ClCompile Include="..\HyperPlatform\HyperPlatform\util.cpp" />
     <ClCompile Include="..\HyperPlatform\HyperPlatform\vm.cpp" />
     <ClCompile Include="..\HyperPlatform\HyperPlatform\vmm.cpp" />
-    <ClCompile Include="active_mem_protector.cpp" />
     <ClCompile Include="AddressRanges.cpp" />
     <ClCompile Include="InterruptHandlers.cpp" />
-    <ClCompile Include="mem_ranger_rules.cpp" />
+    <ClCompile Include="mem_trace.cpp" />
     <ClCompile Include="page_fault.cpp" />
     <ClCompile Include="PageFaultRecord.cpp" />
     <ClCompile Include="rwe.cpp" />
@@ -170,8 +163,6 @@
     <ClCompile Include="V2PMap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\DdiMon\ddi_mon.h" />
-    <ClInclude Include="..\DdiMon\shadow_hook.h" />
     <ClInclude Include="..\HyperPlatform\HyperPlatform\asm.h" />
     <ClInclude Include="..\HyperPlatform\HyperPlatform\common.h" />
     <ClInclude Include="..\HyperPlatform\HyperPlatform\driver.h" />
@@ -187,10 +178,8 @@
     <ClInclude Include="..\HyperPlatform\HyperPlatform\util_page_constants.h" />
     <ClInclude Include="..\HyperPlatform\HyperPlatform\vm.h" />
     <ClInclude Include="..\HyperPlatform\HyperPlatform\vmm.h" />
-    <ClInclude Include="active_mem_protector.h" />
     <ClInclude Include="AddressRanges.h" />
     <ClInclude Include="InterruptHandlers.h" />
-    <ClInclude Include="mem_ranger_rules.h" />
     <ClInclude Include="mem_trace.h" />
     <ClInclude Include="page_fault.h" />
     <ClInclude Include="PageFaultRecord.h" />

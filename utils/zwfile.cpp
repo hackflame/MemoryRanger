@@ -1,11 +1,6 @@
 #include "zwfile.h"
 
-
-void zw_open_file() {
-
-}
-
-extern "C"  namespace zwfile
+extern "C" namespace zwfile
 {
 	NTSTATUS create_directory(PCWSTR IN fullNameDir) {
 		UNICODE_STRING unicode_file_name;
@@ -166,7 +161,9 @@ extern "C"  namespace zwfile
 			FILE_POSITION_INFORMATION file_pos = { 0 }; file_pos.CurrentByteOffset = { 0 };
 			NTSTATUS nt_status = ZwSetInformationFile(m_File, &io_status, &file_pos, sizeof(file_pos), FilePositionInformation);
 			if (NT_SUCCESS(nt_status)) {
+                __debugbreak();
 				nt_status = ZwReadFile(m_File, NULL, NULL, NULL, &io_status, lpBuffer, nNumberOfBytesToRead, NULL, NULL);
+                __debugbreak();
 				if (NT_SUCCESS(nt_status)) {
 					KdPrint(("ZwReadFile() + \n"));
 				}
@@ -410,7 +407,8 @@ extern "C"  namespace zwfile
 		}
 	}
 
-	void zw_open_file(FileWriter & fwFile, ULONG inBufSz, void* inBuf) {
+	bool zw_open_file(FileWriter & fwFile, ULONG inBufSz, void* inBuf) {
+		bool b_res = false;
 		if (inBufSz == sizeof OPEN_THE_FILE) {
 			OPEN_THE_FILE *file = (OPEN_THE_FILE*)inBuf;
 			if (file && file->file_path.path_sz && file->file_path.path_to_file) {
@@ -419,12 +417,14 @@ extern "C"  namespace zwfile
 					file->status = fwFile.init(file->file_path.path_to_file,
 						GENERIC_READ | GENERIC_WRITE, FILE_OPEN_IF, file->shared_access);
 					if (NT_SUCCESS(file->status)) {
+						b_res = true;
 						file->handle = fwFile.get_handle();
 						file->object = fwFile.get_object();
 					}
 				}
 			}
 		}
+		return b_res;
 	}
 
 	void zw_read_file(FileWriter & fwFile, ULONG inBufSz, void* inBuf) {
